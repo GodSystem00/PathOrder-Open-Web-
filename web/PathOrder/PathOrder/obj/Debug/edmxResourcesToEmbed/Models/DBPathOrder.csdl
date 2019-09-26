@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PathOrderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AgenteAduanero">
+    <Key>
+      <PropertyRef Name="IdAgenteAduanero" />
+    </Key>
+    <Property Name="IdAgenteAduanero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RUC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nickname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PermisoAdmin" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="OrdenDespacho" Relationship="Self.FK_OrdenDespacho_AgenteAduanero" FromRole="AgenteAduanero" ToRole="OrdenDespacho" />
+  </EntityType>
+  <EntityType Name="Bulto">
+    <Key>
+      <PropertyRef Name="IdBulto" />
+    </Key>
+    <Property Name="IdBulto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Peso" Type="Int32" Nullable="false" />
+    <Property Name="IdOrdenDespacho" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="OrdenDespacho" Relationship="Self.FK_Bulto_OrdenDespacho" FromRole="Bulto" ToRole="OrdenDespacho" />
+  </EntityType>
+  <EntityType Name="Canal">
+    <Key>
+      <PropertyRef Name="IdCanal" />
+    </Key>
+    <Property Name="IdCanal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="OrdenDespacho" Relationship="Self.FK_OrdenDespacho_Canal" FromRole="Canal" ToRole="OrdenDespacho" />
+  </EntityType>
+  <EntityType Name="DAM">
+    <Key>
+      <PropertyRef Name="IdDAM" />
+    </Key>
+    <Property Name="IdDAM" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CIF" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="OrdenDespacho" Relationship="Self.FK_OrdenDespacho_DAM" FromRole="DAM" ToRole="OrdenDespacho" />
+  </EntityType>
+  <EntityType Name="Factura">
+    <Key>
+      <PropertyRef Name="IdFactura" />
+    </Key>
+    <Property Name="IdFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdOrdenDespacho" Type="Int32" Nullable="false" />
+    <Property Name="NumFactura" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Unidades" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="OrdenDespacho" Relationship="Self.FK_Factura_OrdenDespacho" FromRole="Factura" ToRole="OrdenDespacho" />
+    <NavigationProperty Name="FacturaMercaderia" Relationship="Self.FK_FacturaMercaderia_Factura" FromRole="Factura" ToRole="FacturaMercaderia" />
+  </EntityType>
+  <EntityType Name="FacturaMercaderia">
+    <Key>
+      <PropertyRef Name="IdFacturaMercaderia" />
+    </Key>
+    <Property Name="IdFacturaMercaderia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdMercaderia" Type="Int32" Nullable="false" />
+    <Property Name="IdFactura" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Factura" Relationship="Self.FK_FacturaMercaderia_Factura" FromRole="FacturaMercaderia" ToRole="Factura" />
+    <NavigationProperty Name="Mercaderia" Relationship="Self.FK_FacturaMercaderia_Mercaderia" FromRole="FacturaMercaderia" ToRole="Mercaderia" />
+  </EntityType>
+  <EntityType Name="Fecha">
+    <Key>
+      <PropertyRef Name="IdFecha" />
+    </Key>
+    <Property Name="IdFecha" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FechaEnumeracion" Type="DateTime" Precision="0" />
+    <Property Name="FechaRetiro" Type="DateTime" Precision="0" />
+    <Property Name="FechaCancelacion" Type="DateTime" Precision="0" />
+    <Property Name="FechaLevante" Type="DateTime" Precision="0" />
+    <Property Name="FechaPrecosteo" Type="DateTime" Precision="0" />
+    <Property Name="KMMP" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="OrdenDespacho" Relationship="Self.FK_OrdenDespacho_Fecha" FromRole="Fecha" ToRole="OrdenDespacho" />
+  </EntityType>
+  <EntityType Name="Mercaderia">
+    <Key>
+      <PropertyRef Name="IdMercaderia" />
+    </Key>
+    <Property Name="IdMercaderia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="FacturaMercaderia" Relationship="Self.FK_FacturaMercaderia_Mercaderia" FromRole="Mercaderia" ToRole="FacturaMercaderia" />
+  </EntityType>
+  <EntityType Name="OrdenDespacho">
+    <Key>
+      <PropertyRef Name="IdOrdenDespacho" />
+    </Key>
+    <Property Name="IdOrdenDespacho" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NumeroOrden" Type="Int32" Nullable="false" />
+    <Property Name="Prioridad" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AWB_BL" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AWB_BLOrigen" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Origen" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CantidadSeries" Type="Int32" Nullable="false" />
+    <Property Name="CantidadBultos" Type="Int32" Nullable="false" />
+    <Property Name="IdTipoDespacho" Type="Int32" Nullable="false" />
+    <Property Name="IdDAM" Type="Int32" Nullable="false" />
+    <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+    <Property Name="IdCanal" Type="Int32" Nullable="false" />
+    <Property Name="IdFecha" Type="Int32" Nullable="false" />
+    <Property Name="Observacion" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdAgenteAduanero" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AgenteAduanero" Relationship="Self.FK_OrdenDespacho_AgenteAduanero" FromRole="OrdenDespacho" ToRole="AgenteAduanero" />
+    <NavigationProperty Name="Bulto" Relationship="Self.FK_Bulto_OrdenDespacho" FromRole="OrdenDespacho" ToRole="Bulto" />
+    <NavigationProperty Name="Canal" Relationship="Self.FK_OrdenDespacho_Canal" FromRole="OrdenDespacho" ToRole="Canal" />
+    <NavigationProperty Name="DAM" Relationship="Self.FK_OrdenDespacho_DAM" FromRole="OrdenDespacho" ToRole="DAM" />
+    <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_OrdenDespacho" FromRole="OrdenDespacho" ToRole="Factura" />
+    <NavigationProperty Name="Fecha" Relationship="Self.FK_OrdenDespacho_Fecha" FromRole="OrdenDespacho" ToRole="Fecha" />
+    <NavigationProperty Name="Proveedor" Relationship="Self.FK_OrdenDespacho_Proveedor" FromRole="OrdenDespacho" ToRole="Proveedor" />
+    <NavigationProperty Name="TipoDespacho" Relationship="Self.FK_OrdenDespacho_TipoDespacho" FromRole="OrdenDespacho" ToRole="TipoDespacho" />
+  </EntityType>
+  <EntityType Name="Proveedor">
+    <Key>
+      <PropertyRef Name="IdProveedor" />
+    </Key>
+    <Property Name="IdProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RUC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="OrdenDespacho" Relationship="Self.FK_OrdenDespacho_Proveedor" FromRole="Proveedor" ToRole="OrdenDespacho" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TipoDespacho">
+    <Key>
+      <PropertyRef Name="IdTipoDespacho" />
+    </Key>
+    <Property Name="IdTipoDespacho" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="OrdenDespacho" Relationship="Self.FK_OrdenDespacho_TipoDespacho" FromRole="TipoDespacho" ToRole="OrdenDespacho" />
+  </EntityType>
+  <Association Name="FK_OrdenDespacho_AgenteAduanero">
+    <End Role="AgenteAduanero" Type="Self.AgenteAduanero" Multiplicity="1" />
+    <End Role="OrdenDespacho" Type="Self.OrdenDespacho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AgenteAduanero">
+        <PropertyRef Name="IdAgenteAduanero" />
+      </Principal>
+      <Dependent Role="OrdenDespacho">
+        <PropertyRef Name="IdAgenteAduanero" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bulto_OrdenDespacho">
+    <End Role="OrdenDespacho" Type="Self.OrdenDespacho" Multiplicity="1" />
+    <End Role="Bulto" Type="Self.Bulto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrdenDespacho">
+        <PropertyRef Name="IdOrdenDespacho" />
+      </Principal>
+      <Dependent Role="Bulto">
+        <PropertyRef Name="IdOrdenDespacho" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdenDespacho_Canal">
+    <End Role="Canal" Type="Self.Canal" Multiplicity="1" />
+    <End Role="OrdenDespacho" Type="Self.OrdenDespacho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Canal">
+        <PropertyRef Name="IdCanal" />
+      </Principal>
+      <Dependent Role="OrdenDespacho">
+        <PropertyRef Name="IdCanal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdenDespacho_DAM">
+    <End Role="DAM" Type="Self.DAM" Multiplicity="1" />
+    <End Role="OrdenDespacho" Type="Self.OrdenDespacho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DAM">
+        <PropertyRef Name="IdDAM" />
+      </Principal>
+      <Dependent Role="OrdenDespacho">
+        <PropertyRef Name="IdDAM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Factura_OrdenDespacho">
+    <End Role="OrdenDespacho" Type="Self.OrdenDespacho" Multiplicity="1" />
+    <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrdenDespacho">
+        <PropertyRef Name="IdOrdenDespacho" />
+      </Principal>
+      <Dependent Role="Factura">
+        <PropertyRef Name="IdOrdenDespacho" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FacturaMercaderia_Factura">
+    <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+    <End Role="FacturaMercaderia" Type="Self.FacturaMercaderia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Factura">
+        <PropertyRef Name="IdFactura" />
+      </Principal>
+      <Dependent Role="FacturaMercaderia">
+        <PropertyRef Name="IdFactura" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FacturaMercaderia_Mercaderia">
+    <End Role="Mercaderia" Type="Self.Mercaderia" Multiplicity="1" />
+    <End Role="FacturaMercaderia" Type="Self.FacturaMercaderia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mercaderia">
+        <PropertyRef Name="IdMercaderia" />
+      </Principal>
+      <Dependent Role="FacturaMercaderia">
+        <PropertyRef Name="IdMercaderia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdenDespacho_Fecha">
+    <End Role="Fecha" Type="Self.Fecha" Multiplicity="1" />
+    <End Role="OrdenDespacho" Type="Self.OrdenDespacho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fecha">
+        <PropertyRef Name="IdFecha" />
+      </Principal>
+      <Dependent Role="OrdenDespacho">
+        <PropertyRef Name="IdFecha" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdenDespacho_Proveedor">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+    <End Role="OrdenDespacho" Type="Self.OrdenDespacho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="IdProveedor" />
+      </Principal>
+      <Dependent Role="OrdenDespacho">
+        <PropertyRef Name="IdProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdenDespacho_TipoDespacho">
+    <End Role="TipoDespacho" Type="Self.TipoDespacho" Multiplicity="1" />
+    <End Role="OrdenDespacho" Type="Self.OrdenDespacho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoDespacho">
+        <PropertyRef Name="IdTipoDespacho" />
+      </Principal>
+      <Dependent Role="OrdenDespacho">
+        <PropertyRef Name="IdTipoDespacho" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PathOrderEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AgenteAduanero" EntityType="Self.AgenteAduanero" />
+    <EntitySet Name="Bulto" EntityType="Self.Bulto" />
+    <EntitySet Name="Canal" EntityType="Self.Canal" />
+    <EntitySet Name="DAM" EntityType="Self.DAM" />
+    <EntitySet Name="Factura" EntityType="Self.Factura" />
+    <EntitySet Name="FacturaMercaderia" EntityType="Self.FacturaMercaderia" />
+    <EntitySet Name="Fecha" EntityType="Self.Fecha" />
+    <EntitySet Name="Mercaderia" EntityType="Self.Mercaderia" />
+    <EntitySet Name="OrdenDespacho" EntityType="Self.OrdenDespacho" />
+    <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TipoDespacho" EntityType="Self.TipoDespacho" />
+    <AssociationSet Name="FK_OrdenDespacho_AgenteAduanero" Association="Self.FK_OrdenDespacho_AgenteAduanero">
+      <End Role="AgenteAduanero" EntitySet="AgenteAduanero" />
+      <End Role="OrdenDespacho" EntitySet="OrdenDespacho" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bulto_OrdenDespacho" Association="Self.FK_Bulto_OrdenDespacho">
+      <End Role="OrdenDespacho" EntitySet="OrdenDespacho" />
+      <End Role="Bulto" EntitySet="Bulto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdenDespacho_Canal" Association="Self.FK_OrdenDespacho_Canal">
+      <End Role="Canal" EntitySet="Canal" />
+      <End Role="OrdenDespacho" EntitySet="OrdenDespacho" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdenDespacho_DAM" Association="Self.FK_OrdenDespacho_DAM">
+      <End Role="DAM" EntitySet="DAM" />
+      <End Role="OrdenDespacho" EntitySet="OrdenDespacho" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Factura_OrdenDespacho" Association="Self.FK_Factura_OrdenDespacho">
+      <End Role="OrdenDespacho" EntitySet="OrdenDespacho" />
+      <End Role="Factura" EntitySet="Factura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FacturaMercaderia_Factura" Association="Self.FK_FacturaMercaderia_Factura">
+      <End Role="Factura" EntitySet="Factura" />
+      <End Role="FacturaMercaderia" EntitySet="FacturaMercaderia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FacturaMercaderia_Mercaderia" Association="Self.FK_FacturaMercaderia_Mercaderia">
+      <End Role="Mercaderia" EntitySet="Mercaderia" />
+      <End Role="FacturaMercaderia" EntitySet="FacturaMercaderia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdenDespacho_Fecha" Association="Self.FK_OrdenDespacho_Fecha">
+      <End Role="Fecha" EntitySet="Fecha" />
+      <End Role="OrdenDespacho" EntitySet="OrdenDespacho" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdenDespacho_Proveedor" Association="Self.FK_OrdenDespacho_Proveedor">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="OrdenDespacho" EntitySet="OrdenDespacho" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdenDespacho_TipoDespacho" Association="Self.FK_OrdenDespacho_TipoDespacho">
+      <End Role="TipoDespacho" EntitySet="TipoDespacho" />
+      <End Role="OrdenDespacho" EntitySet="OrdenDespacho" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

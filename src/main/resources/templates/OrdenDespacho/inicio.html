@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace = "layout/layout :: head"></head>
+<body>
+<header th:replace = "layout/layout :: header"></header>
+
+<div class = "container" align="left">
+	<h1>Bienvenido a PathOrder</h1>	
+		<span th:text="${nombre2}"></span>
+</div>
+<div class="card" style="width: 18rem;"align="Center">
+  <img src="../../static/crack.jpg" class="card-img-top" alt="">
+  <div class="card-body">
+    <p class="card-text">Nombre: Alberto</p>
+     <p class="card-text">Apellidos: Riveros</p>
+     <p class="card-text">Edad: 32</p>
+     
+  </div>
+</div>
+
+<footer th:replace = "layout/layout :: footer"></footer>
+</body>
+</html>

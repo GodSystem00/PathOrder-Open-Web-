@@ -1,0 +1,276 @@
+USE [PathOrder]
+GO
+/****** Object:  Table [dbo].[AgenteAduanero]    Script Date: 24/09/2019 2:08:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[AgenteAduanero](
+	[IdAgenteAduanero] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [varchar](40) NOT NULL,
+	[RUC] [varchar](20) NOT NULL,
+	[Nickname] [varchar](20) NOT NULL,
+	[Password] [varchar](40) NOT NULL,
+	[PermisoAdmin] [bit] NOT NULL,
+ CONSTRAINT [PK_AgenteAduanero] PRIMARY KEY CLUSTERED 
+(
+	[IdAgenteAduanero] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Bulto]    Script Date: 24/09/2019 2:08:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Bulto](
+	[IdBulto] [int] IDENTITY(1,1) NOT NULL,
+	[Peso] [int] NOT NULL,
+	[IdOrdenDespacho] [int] NOT NULL,
+ CONSTRAINT [PK_Bulto] PRIMARY KEY CLUSTERED 
+(
+	[IdBulto] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Canal]    Script Date: 24/09/2019 2:08:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Canal](
+	[IdCanal] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [varchar](20) NOT NULL,
+	[Descripcion] [varchar](40) NOT NULL,
+ CONSTRAINT [PK_Canal] PRIMARY KEY CLUSTERED 
+(
+	[IdCanal] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[DAM]    Script Date: 24/09/2019 2:08:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[DAM](
+	[IdDAM] [int] IDENTITY(1,1) NOT NULL,
+	[Descripcion] [varchar](40) NOT NULL,
+	[CIF] [money] NOT NULL,
+ CONSTRAINT [PK_DAM] PRIMARY KEY CLUSTERED 
+(
+	[IdDAM] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Factura]    Script Date: 24/09/2019 2:08:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Factura](
+	[IdFactura] [int] IDENTITY(1,1) NOT NULL,
+	[IdOrdenDespacho] [int] NOT NULL,
+	[NumFactura] [int] NOT NULL,
+	[Descripcion] [varchar](40) NOT NULL,
+	[Unidades] [int] NOT NULL,
+	[Fecha] [date] NOT NULL,
+ CONSTRAINT [PK_Factura] PRIMARY KEY CLUSTERED 
+(
+	[IdFactura] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[FacturaMercaderia]    Script Date: 24/09/2019 2:08:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FacturaMercaderia](
+	[IdFacturaMercaderia] [int] IDENTITY(1,1) NOT NULL,
+	[IdMercaderia] [int] NOT NULL,
+	[IdFactura] [int] NOT NULL,
+ CONSTRAINT [PK_FacturaMercaderia] PRIMARY KEY CLUSTERED 
+(
+	[IdFacturaMercaderia] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Fecha]    Script Date: 24/09/2019 2:08:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Fecha](
+	[IdFecha] [int] IDENTITY(1,1) NOT NULL,
+	[FechaEnumeracion] [date] NULL,
+	[FechaRetiro] [date] NULL,
+	[FechaCancelacion] [date] NULL,
+	[FechaLevante] [date] NULL,
+	[FechaPrecosteo] [date] NULL,
+	[KMMP] [date] NULL,
+ CONSTRAINT [PK_Fecha] PRIMARY KEY CLUSTERED 
+(
+	[IdFecha] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Mercaderia]    Script Date: 24/09/2019 2:08:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Mercaderia](
+	[IdMercaderia] [int] IDENTITY(1,1) NOT NULL,
+	[Descripcion] [varchar](40) NOT NULL,
+	[Tipo] [varchar](40) NOT NULL,
+ CONSTRAINT [PK_Mercaderia] PRIMARY KEY CLUSTERED 
+(
+	[IdMercaderia] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[OrdenDespacho]    Script Date: 24/09/2019 2:08:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[OrdenDespacho](
+	[IdOrdenDespacho] [int] IDENTITY(1,1) NOT NULL,
+	[NumeroOrden] [int] NOT NULL,
+	[Prioridad] [varchar](20) NOT NULL,
+	[AWB_BL] [varchar](15) NOT NULL,
+	[AWB_BLOrigen] [varchar](15) NOT NULL,
+	[Origen] [varchar](15) NOT NULL,
+	[CantidadSeries] [int] NOT NULL,
+	[CantidadBultos] [int] NOT NULL,
+	[IdTipoDespacho] [int] NOT NULL,
+	[IdDAM] [int] NOT NULL,
+	[IdProveedor] [int] NOT NULL,
+	[IdCanal] [int] NOT NULL,
+	[IdFecha] [int] NOT NULL,
+	[Observacion] [varchar](40) NOT NULL,
+	[IdAgenteAduanero] [int] NOT NULL,
+ CONSTRAINT [PK_OrdenDespacho_1] PRIMARY KEY CLUSTERED 
+(
+	[IdOrdenDespacho] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Proveedor]    Script Date: 24/09/2019 2:08:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Proveedor](
+	[IdProveedor] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [varchar](40) NOT NULL,
+	[RUC] [varchar](20) NOT NULL,
+ CONSTRAINT [PK_Proveedor] PRIMARY KEY CLUSTERED 
+(
+	[IdProveedor] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[TipoDespacho]    Script Date: 24/09/2019 2:08:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[TipoDespacho](
+	[IdTipoDespacho] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [varchar](15) NOT NULL,
+ CONSTRAINT [PK_TipoDespacho] PRIMARY KEY CLUSTERED 
+(
+	[IdTipoDespacho] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+ALTER TABLE [dbo].[Bulto]  WITH CHECK ADD  CONSTRAINT [FK_Bulto_OrdenDespacho] FOREIGN KEY([IdOrdenDespacho])
+REFERENCES [dbo].[OrdenDespacho] ([IdOrdenDespacho])
+GO
+ALTER TABLE [dbo].[Bulto] CHECK CONSTRAINT [FK_Bulto_OrdenDespacho]
+GO
+ALTER TABLE [dbo].[FacturaMercaderia]  WITH CHECK ADD  CONSTRAINT [FK_FacturaMercaderia_Factura] FOREIGN KEY([IdFactura])
+REFERENCES [dbo].[Factura] ([IdFactura])
+GO
+ALTER TABLE [dbo].[FacturaMercaderia] CHECK CONSTRAINT [FK_FacturaMercaderia_Factura]
+GO
+ALTER TABLE [dbo].[FacturaMercaderia]  WITH CHECK ADD  CONSTRAINT [FK_FacturaMercaderia_Mercaderia] FOREIGN KEY([IdMercaderia])
+REFERENCES [dbo].[Mercaderia] ([IdMercaderia])
+GO
+ALTER TABLE [dbo].[FacturaMercaderia] CHECK CONSTRAINT [FK_FacturaMercaderia_Mercaderia]
+GO
+ALTER TABLE [dbo].[OrdenDespacho]  WITH CHECK ADD  CONSTRAINT [FK_OrdenDespacho_AgenteAduanero] FOREIGN KEY([IdAgenteAduanero])
+REFERENCES [dbo].[AgenteAduanero] ([IdAgenteAduanero])
+GO
+ALTER TABLE [dbo].[OrdenDespacho] CHECK CONSTRAINT [FK_OrdenDespacho_AgenteAduanero]
+GO
+ALTER TABLE [dbo].[OrdenDespacho]  WITH CHECK ADD  CONSTRAINT [FK_OrdenDespacho_Canal] FOREIGN KEY([IdCanal])
+REFERENCES [dbo].[Canal] ([IdCanal])
+GO
+ALTER TABLE [dbo].[OrdenDespacho] CHECK CONSTRAINT [FK_OrdenDespacho_Canal]
+GO
+ALTER TABLE [dbo].[OrdenDespacho]  WITH CHECK ADD  CONSTRAINT [FK_OrdenDespacho_DAM] FOREIGN KEY([IdDAM])
+REFERENCES [dbo].[DAM] ([IdDAM])
+GO
+ALTER TABLE [dbo].[OrdenDespacho] CHECK CONSTRAINT [FK_OrdenDespacho_DAM]
+GO
+ALTER TABLE [dbo].[OrdenDespacho]  WITH CHECK ADD  CONSTRAINT [FK_OrdenDespacho_Fecha] FOREIGN KEY([IdFecha])
+REFERENCES [dbo].[Fecha] ([IdFecha])
+GO
+ALTER TABLE [dbo].[OrdenDespacho] CHECK CONSTRAINT [FK_OrdenDespacho_Fecha]
+GO
+ALTER TABLE [dbo].[OrdenDespacho]  WITH CHECK ADD  CONSTRAINT [FK_OrdenDespacho_Proveedor] FOREIGN KEY([IdProveedor])
+REFERENCES [dbo].[Proveedor] ([IdProveedor])
+GO
+ALTER TABLE [dbo].[OrdenDespacho] CHECK CONSTRAINT [FK_OrdenDespacho_Proveedor]
+GO
+ALTER TABLE [dbo].[OrdenDespacho]  WITH CHECK ADD  CONSTRAINT [FK_OrdenDespacho_TipoDespacho] FOREIGN KEY([IdTipoDespacho])
+REFERENCES [dbo].[TipoDespacho] ([IdTipoDespacho])
+GO
+ALTER TABLE [dbo].[OrdenDespacho] CHECK CONSTRAINT [FK_OrdenDespacho_TipoDespacho]
+GO
